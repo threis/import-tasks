@@ -1,6 +1,6 @@
 import { FastifyReply, FastifyRequest } from "fastify";
 import { z } from "zod";
-import { makeTaskUseCase } from "../../../use-cases/factories/make-task-use-case";
+import { makeCreateTaskUseCase } from "../../../use-cases/factories/make-create-task-use-case";
 
 export async function create(request: FastifyRequest, reply: FastifyReply) {
     const createTaskBodySchema = z.object({
@@ -10,7 +10,7 @@ export async function create(request: FastifyRequest, reply: FastifyReply) {
 
     const {title, description } = createTaskBodySchema.parse(request.body)
 
-    const createTaskUseCase = makeTaskUseCase()
+    const createTaskUseCase = makeCreateTaskUseCase()
     await createTaskUseCase.execute({
         title,
         description,

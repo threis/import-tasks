@@ -2,19 +2,19 @@ import { Tasks } from "@prisma/client";
 import { TasksRepositories } from "../repositories/tasks-repositories";
 
 
-interface TaskUseCaseRequest {
+interface CreateTaskUseCaseRequest {
     title: string;
     description: string;
 }
 
-interface TaskUseCaseReply {
+interface CreateTaskUseCaseReply {
     task: Tasks
 }
 
 export class CreateTaskUseCase {
     constructor(private tasksRepository: TasksRepositories) { }
 
-    async execute({ title, description }: TaskUseCaseRequest): Promise<TaskUseCaseReply> {
+    async execute({ title, description }:  CreateTaskUseCaseRequest): Promise<CreateTaskUseCaseReply> {
 
         if (!title ||!description) {
             throw new Error('title and description are required')

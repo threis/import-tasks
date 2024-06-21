@@ -4,6 +4,22 @@ import { TasksRepositories } from "../tasks-repositories";
 import { randomUUID } from 'crypto';
 
 export class InMemoryTaskRepository implements TasksRepositories {
+    
+    async findById(id: string) {
+        const task = this.tasks.find(task => task.id === id)
+
+        if (!task){
+            throw new Error('Task not found')
+        }
+
+        return task
+    }
+
+    async getMany(page: number) {
+        const tasks = await this.tasks
+
+        return tasks.slice((page - 1) * 20, page * 20)
+    }
 
     public tasks: Tasks[] = []
 

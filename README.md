@@ -1,6 +1,6 @@
 ### A API deve conter as seguintes funcionalidades:
 
-- [ ] Criação de uma task
+- [x] Criação de uma task
 - [ ] Listagem de todas as tasks
 - [ ] Atualização de uma task pelo `id`
 - [ ] Remover uma task pelo `id`
