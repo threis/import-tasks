@@ -4,11 +4,13 @@ import { TasksRepositories } from "../tasks-repositories";
 import { randomUUID } from 'crypto';
 
 export class InMemoryTaskRepository implements TasksRepositories {
-    
+
+    public tasks: Tasks[] = []
+
     async findById(id: string) {
         const task = this.tasks.find(task => task.id === id)
 
-        if (!task){
+        if (!task) {
             throw new Error('Task not found')
         }
 
@@ -21,14 +23,13 @@ export class InMemoryTaskRepository implements TasksRepositories {
         return tasks.slice((page - 1) * 20, page * 20)
     }
 
-    public tasks: Tasks[] = []
 
-    async create(data: Prisma.TasksUncheckedCreateInput){
-        if (!data.title){
+    async create(data: Prisma.TasksUncheckedCreateInput) {
+        if (!data.title) {
             throw new Error('title is required')
         }
-        
-        if (!data.description){
+
+        if (!data.description) {
             throw new Error('description is required')
         }
 
@@ -41,6 +42,16 @@ export class InMemoryTaskRepository implements TasksRepositories {
         }
 
         await this.tasks.push(task)
+
+        return task
+    }
+
+    async save(task: Tasks) {
+
+        const taskIndex = this.tasks.findIndex((item) => item.id === task.id)
+        if (taskIndex >= 0) {
+            this.tasks[taskIndex] = task
+        }
 
         return task
     }

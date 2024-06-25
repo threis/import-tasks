@@ -23,4 +23,9 @@ export class PrismaTaskRepository implements TasksRepositories {
         const task = await prisma.tasks.create({ data })
         return task
     }
+  
+    async save(data: Prisma.TasksUncheckedCreateInput): Promise<Tasks> {
+        const task = await prisma.tasks.update({where: {id: data.id}, data})
+        return task
+    }
 }

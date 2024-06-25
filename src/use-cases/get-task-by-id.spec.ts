@@ -1,14 +1,14 @@
 import { beforeEach, describe, expect, it } from "vitest";
 import { InMemoryTaskRepository } from "../repositories/in-memory/in-memory-task-repository";
-import { GetTaskByIdsUseCase } from "./get-task-by-id";
+import { GetTaskByIdUseCase } from "./get-task-by-id";
 
 let inMemoryTaskRepository: InMemoryTaskRepository
-let sut: GetTaskByIdsUseCase
+let sut: GetTaskByIdUseCase
 describe('Get Task By Id', () => {
 
     beforeEach(async () => {
         inMemoryTaskRepository = new InMemoryTaskRepository()
-        sut = new GetTaskByIdsUseCase(inMemoryTaskRepository)
+        sut = new GetTaskByIdUseCase(inMemoryTaskRepository)
     })
 
     it('should be able to get task by id', async () => {
