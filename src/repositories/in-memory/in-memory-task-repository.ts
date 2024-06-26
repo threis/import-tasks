@@ -55,4 +55,14 @@ export class InMemoryTaskRepository implements TasksRepositories {
 
         return task
     }
+
+    
+    async delete(taskId: string) {
+
+        const taskIndex = this.tasks.findIndex((item) => item.id === taskId)
+        if (taskIndex >= 0) {
+            this.tasks.splice(taskIndex,1)
+        }
+
+    }
 }
