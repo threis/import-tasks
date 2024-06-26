@@ -6,4 +6,5 @@ export interface TasksRepositories {
     findById(id: string): Promise<Tasks>
     save(task: Tasks): Promise<Tasks>
     delete(taskId: string): Promise<void>
+    markAscompleted(taskId: string): Promise<Tasks>
 }

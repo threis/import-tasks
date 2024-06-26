@@ -65,4 +65,14 @@ export class InMemoryTaskRepository implements TasksRepositories {
         }
 
     }
+
+    async markAscompleted(taskId: string){
+
+        const taskIndex = this.tasks.findIndex((item) => item.id === taskId)
+        if (taskIndex >= 0) {
+            this.tasks[taskIndex].completed_at = new Date()
+        }
+
+        return this.tasks[taskIndex]
+    }
 }

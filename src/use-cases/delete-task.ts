@@ -1,28 +1,23 @@
-import { beforeEach, describe, expect, it } from "vitest";
-import { InMemoryTaskRepository } from "../repositories/in-memory/in-memory-task-repository";
-import { DeleteTaskByIdUseCase } from "./delete-task.spec";
+import { TasksRepositories } from "../repositories/tasks-repositories";
 
-let inMemoryTaskRepository: InMemoryTaskRepository
-let sut: DeleteTaskByIdUseCase
-describe('Delete Task By Id', () => {
 
-    beforeEach(async () => {
-        inMemoryTaskRepository = new InMemoryTaskRepository()
-        sut = new DeleteTaskByIdUseCase(inMemoryTaskRepository)
-    })
+interface DeleteTaskByIdUseCaseRequest {
+    taskId: string;
+}
 
-    it('should be remove a task by id', async () => {
+interface DeleteTaskByIdUseCaseReply {}
 
-        const task = await inMemoryTaskRepository.create({
-            title: 'title-example-1',
-            description: 'description-example-1',
-        })
-     
-       await sut.execute({
-            taskId: task.id
-        })
+export class DeleteTaskByIdUseCase {
+    constructor(private tasksRepository: TasksRepositories) { }
 
-        expect(inMemoryTaskRepository.tasks).toHaveLength(0)
-    })
+    async execute({ taskId }: DeleteTaskByIdUseCaseRequest): Promise<DeleteTaskByIdUseCaseReply> {
 
-})
+        if (!taskId ){
+            throw new Error('taskId is required')
+        }
+
+        await this.tasksRepository.delete(taskId)
+
+        return {}
+    }
+}

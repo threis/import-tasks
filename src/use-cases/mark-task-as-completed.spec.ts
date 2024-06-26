@@ -1,17 +1,17 @@
 import { beforeEach, describe, expect, it } from "vitest";
 import { InMemoryTaskRepository } from "../repositories/in-memory/in-memory-task-repository";
-import { DeleteTaskByIdUseCase } from "./delete-task";
+import { MarkTaskAsCompletedUseCase } from "./mark-task-as-completed";
 
 let inMemoryTaskRepository: InMemoryTaskRepository
-let sut: DeleteTaskByIdUseCase
-describe('Delete Task By Id', () => {
+let sut: MarkTaskAsCompletedUseCase
+describe('Mark Task As Completed', () => {
 
     beforeEach(async () => {
         inMemoryTaskRepository = new InMemoryTaskRepository()
-        sut = new DeleteTaskByIdUseCase(inMemoryTaskRepository)
+        sut = new MarkTaskAsCompletedUseCase(inMemoryTaskRepository)
     })
 
-    it('should be remove a task by id', async () => {
+    it('should be mark a task as completed', async () => {
 
         const task = await inMemoryTaskRepository.create({
             title: 'title-example-1',
@@ -22,7 +22,11 @@ describe('Delete Task By Id', () => {
             taskId: task.id
         })
 
-        expect(inMemoryTaskRepository.tasks).toHaveLength(0)
+        expect(inMemoryTaskRepository.tasks).toEqual([
+            expect.objectContaining({
+                completed_at: expect.any(Date)
+            })
+        ])
     })
 
 })
