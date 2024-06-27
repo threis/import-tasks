@@ -1,5 +1,6 @@
 import { Tasks } from "@prisma/client";
 import { TasksRepositories } from "../repositories/tasks-repositories";
+import { ResourceNotFoundError } from "./errors/resource-not-found";
 
 
 interface UpdateTaskByIdUseCaseRequest {
@@ -18,7 +19,7 @@ export class UpdateTaskByIdUseCase {
     async execute({ taskId, title, description }: UpdateTaskByIdUseCaseRequest): Promise<UpdateTaskByIdUseCaseReply> {
 
         if (!taskId || !title || !description){
-            throw new Error('taskId, title and description are required')
+            throw new ResourceNotFoundError()
         }
 
         const task = await this.tasksRepository.findById(taskId)

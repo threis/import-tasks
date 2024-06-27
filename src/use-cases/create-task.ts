@@ -1,5 +1,6 @@
 import { Tasks } from "@prisma/client";
 import { TasksRepositories } from "../repositories/tasks-repositories";
+import { ResourceNotFoundError } from "./errors/resource-not-found";
 
 
 interface CreateTaskUseCaseRequest {
@@ -17,7 +18,7 @@ export class CreateTaskUseCase {
     async execute({ title, description }:  CreateTaskUseCaseRequest): Promise<CreateTaskUseCaseReply> {
 
         if (!title ||!description) {
-            throw new Error('title and description are required')
+            throw new ResourceNotFoundError()
         }
 
         const task = await this.tasksRepository.create({ title, description })

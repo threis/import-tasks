@@ -1,4 +1,5 @@
 import { TasksRepositories } from "../repositories/tasks-repositories";
+import { ResourceNotFoundError } from "./errors/resource-not-found";
 
 
 interface MarkTaskAsCompletedUseCaseRequest {
@@ -13,7 +14,7 @@ export class MarkTaskAsCompletedUseCase {
     async execute({ taskId }: MarkTaskAsCompletedUseCaseRequest): Promise<MarkTaskAsCompletedUseCaseReply> {
 
         if (!taskId ){
-            throw new Error('taskId is required')
+            throw new ResourceNotFoundError()
         }
 
         await this.tasksRepository.markAscompleted(taskId)

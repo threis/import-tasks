@@ -2,6 +2,7 @@ import { Tasks, Prisma } from '@prisma/client'
 
 import { TasksRepositories } from "../tasks-repositories";
 import { randomUUID } from 'crypto';
+import { ResourceNotFoundError } from '../../use-cases/errors/resource-not-found';
 
 export class InMemoryTaskRepository implements TasksRepositories {
 
@@ -11,7 +12,7 @@ export class InMemoryTaskRepository implements TasksRepositories {
         const task = this.tasks.find(task => task.id === id)
 
         if (!task) {
-            throw new Error('Task not found')
+            throw new ResourceNotFoundError()
         }
 
         return task
