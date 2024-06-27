@@ -12,6 +12,7 @@ app
     console.log(`🆗 HTTP Server Running! on port ${env.PORT}`)
   })
 
+
   app.setErrorHandler((error, _, reply) => {
     if (error instanceof ZodError) {
       return reply
